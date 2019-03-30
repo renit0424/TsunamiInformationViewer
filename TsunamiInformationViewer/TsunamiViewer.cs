@@ -165,7 +165,6 @@ namespace TsunamiInformationViewer
 
             label2.Text = ristBox1.Items.Count.ToString() + "件";
         }
-
         //        if () page = 0; else page++;
         //{
 
