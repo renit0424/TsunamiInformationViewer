@@ -14,6 +14,7 @@ namespace TsunamiInformationViewer
 {
     public partial class TsunamiViewer : Form
     {
+
         //親画面からアクセスできるプロパティを作る----
         private String _set;
 
@@ -42,20 +43,27 @@ namespace TsunamiInformationViewer
                 _set2 = value;
             }
         }
-        public TsunamiViewer()
+        public TsunamiViewer(Form1 fm)
         {
             InitializeComponent();
             timer2.Start();
             timer3.Start();
             timer4.Start();
-
+            // メインフォーム
+            fm1 = fm;
         }
+
+
         private static readonly HttpClient HttpClient = new HttpClient();
         List<string> result = new List<string>();
         ListBox ristBox1 = new ListBox();
         ListBox ristBox2 = new ListBox();
         ListBox ristBox3 = new ListBox();
         ListBox ristBox4 = new ListBox();
+        private Form1 fm1;
+        public int page = 0;
+
+
         private async void timer1_TickAsync(object sender, EventArgs e)
         {
             string Uri = "http://www.jma.go.jp/jp/tsunami/info_03_20150918030005.html";
@@ -154,43 +162,48 @@ namespace TsunamiInformationViewer
                 ristBox4.Items.Add(item.SelectNodes("td").Skip(2).Take(1).First().InnerText.Replace("&nbsp;", ""));
             }
 
-        }
-    
 
+            label2.Text = ristBox1.Items.Count.ToString() + "件";
+        }
+
+        //        if () page = 0; else page++;
+        //{
+
+        //}
         private void timer2_Tick(object sender, EventArgs e)
         {
             try
             {
                 timer4.Stop();
                 //津波警報・注意報の種類
-                type1.Text = "" + (string)ristBox1.Items[0].ToString();
-                type2.Text = "" + (string)ristBox1.Items[1].ToString();
-                type3.Text = "" + (string)ristBox1.Items[2].ToString();
-                type4.Text = "" + (string)ristBox1.Items[3].ToString();
-                type5.Text = "" + (string)ristBox1.Items[4].ToString();
-                type6.Text = "" + (string)ristBox1.Items[5].ToString();
+                type1.Text = "" + (string)ristBox1.Items[page * 6].ToString();
+                type2.Text = "" + (string)ristBox1.Items[page * 6 + 1].ToString();
+                type3.Text = "" + (string)ristBox1.Items[page * 6 + 2].ToString();
+                type4.Text = "" + (string)ristBox1.Items[page * 6 + 3].ToString();
+                type5.Text = "" + (string)ristBox1.Items[page * 6 + 4].ToString();
+                type6.Text = "" + (string)ristBox1.Items[page * 6 + 5].ToString();
                 //津波到達予想区
-                location1.Text = "" + (string)ristBox2.Items[0].ToString();
-                location2.Text = "" + (string)ristBox2.Items[1].ToString();
-                location3.Text = "" + (string)ristBox2.Items[2].ToString();
-                location4.Text = "" + (string)ristBox2.Items[3].ToString();
-                location5.Text = "" + (string)ristBox2.Items[4].ToString();
-                location6.Text = "" + (string)ristBox2.Items[5].ToString();
+                location1.Text = "" + (string)ristBox2.Items[page * 6].ToString();
+                location2.Text = "" + (string)ristBox2.Items[page * 6 + 1].ToString();
+                location3.Text = "" + (string)ristBox2.Items[page * 6 + 2].ToString();
+                location4.Text = "" + (string)ristBox2.Items[page * 6 + 3].ToString();
+                location5.Text = "" + (string)ristBox2.Items[page * 6 + 4].ToString();
+                location6.Text = "" + (string)ristBox2.Items[page * 6 + 5].ToString();
 
                 //津波の到達時刻
-                arrival_time1.Text = "" + (string)ristBox3.Items[0].ToString();
-                arrival_time2.Text = "" + (string)ristBox3.Items[1].ToString();
-                arrival_time3.Text = "" + (string)ristBox3.Items[2].ToString();
-                arrival_time4.Text = "" + (string)ristBox3.Items[3].ToString();
-                arrival_time5.Text = "" + (string)ristBox3.Items[4].ToString();
-                arrival_time6.Text = "" + (string)ristBox3.Items[5].ToString();
+                arrival_time1.Text = "" + (string)ristBox3.Items[page * 6].ToString();
+                arrival_time2.Text = "" + (string)ristBox3.Items[page * 6 + 1].ToString();
+                arrival_time3.Text = "" + (string)ristBox3.Items[page * 6 + 2].ToString();
+                arrival_time4.Text = "" + (string)ristBox3.Items[page * 6 + 3].ToString();
+                arrival_time5.Text = "" + (string)ristBox3.Items[page * 6 + 4].ToString();
+                arrival_time6.Text = "" + (string)ristBox3.Items[page * 6 + 5].ToString();
                 //津波の予想高さ
-                height1.Text = "" + (string)ristBox4.Items[0].ToString();
-                height2.Text = "" + (string)ristBox4.Items[1].ToString();
-                height3.Text = "" + (string)ristBox4.Items[2].ToString();
-                height4.Text = "" + (string)ristBox4.Items[3].ToString();
-                height5.Text = "" + (string)ristBox4.Items[4].ToString();
-                height6.Text = "" + (string)ristBox4.Items[5].ToString();
+                height1.Text = "" + (string)ristBox4.Items[page * 6].ToString();
+                height2.Text = "" + (string)ristBox4.Items[page * 6 + 1].ToString();
+                height3.Text = "" + (string)ristBox4.Items[page * 6 + 2].ToString();
+                height4.Text = "" + (string)ristBox4.Items[page * 6 + 3].ToString();
+                height5.Text = "" + (string)ristBox4.Items[page * 6 + 4].ToString();
+                height6.Text = "" + (string)ristBox4.Items[page * 6 + 5].ToString();
 
                 if (type1.Text == "津波警報")
                 {
@@ -269,130 +282,131 @@ namespace TsunamiInformationViewer
                 {
                     type6.BackColor = Color.MediumOrchid;
                 }
-                
+
                 timer3.Start();
             }
-            catch {
+            catch
+            {
             }
         }
 
 
         private void timer3_Tick(object sender, EventArgs e)
         {
-            try
-            {
-                timer2.Stop();
-                //津波警報・注意報の種類
-                type1.Text = "" + (string)ristBox1.Items[6].ToString();
-                type2.Text = "" + (string)ristBox1.Items[7].ToString();
-                type3.Text = "" + (string)ristBox1.Items[8].ToString();
-                type4.Text = "" + (string)ristBox1.Items[9].ToString();
-                type5.Text = "" + (string)ristBox1.Items[10].ToString();
-                type6.Text = "" + (string)ristBox1.Items[11].ToString();
-                //津波到達予想区
-                location1.Text = "" + (string)ristBox2.Items[6].ToString();
-                location2.Text = "" + (string)ristBox2.Items[7].ToString();
-                location3.Text = "" + (string)ristBox2.Items[8].ToString();
-                location4.Text = "" + (string)ristBox2.Items[9].ToString();
-                location5.Text = "" + (string)ristBox2.Items[10].ToString();
-                location6.Text = "" + (string)ristBox2.Items[11].ToString();
+            //try
+            //{
+            //    timer2.Stop();
+            //    //津波警報・注意報の種類
+            //    type1.Text = "" + (string)ristBox1.Items[6].ToString();
+            //    type2.Text = "" + (string)ristBox1.Items[7].ToString();
+            //    type3.Text = "" + (string)ristBox1.Items[8].ToString();
+            //    type4.Text = "" + (string)ristBox1.Items[9].ToString();
+            //    type5.Text = "" + (string)ristBox1.Items[10].ToString();
+            //    type6.Text = "" + (string)ristBox1.Items[11].ToString();
+            //    //津波到達予想区
+            //    location1.Text = "" + (string)ristBox2.Items[6].ToString();
+            //    location2.Text = "" + (string)ristBox2.Items[7].ToString();
+            //    location3.Text = "" + (string)ristBox2.Items[8].ToString();
+            //    location4.Text = "" + (string)ristBox2.Items[9].ToString();
+            //    location5.Text = "" + (string)ristBox2.Items[10].ToString();
+            //    location6.Text = "" + (string)ristBox2.Items[11].ToString();
 
-                //津波の到達時刻
-                arrival_time1.Text = "" + (string)ristBox3.Items[6].ToString();
-                arrival_time2.Text = "" + (string)ristBox3.Items[7].ToString();
-                arrival_time3.Text = "" + (string)ristBox3.Items[8].ToString();
-                arrival_time4.Text = "" + (string)ristBox3.Items[9].ToString();
-                arrival_time5.Text = "" + (string)ristBox3.Items[10].ToString();
-                arrival_time6.Text = "" + (string)ristBox3.Items[11].ToString();
-                //津波の予想高さ
-                height1.Text = "" + (string)ristBox4.Items[6].ToString();
-                height2.Text = "" + (string)ristBox4.Items[7].ToString();
-                height3.Text = "" + (string)ristBox4.Items[8].ToString();
-                height4.Text = "" + (string)ristBox4.Items[9].ToString();
-                height5.Text = "" + (string)ristBox4.Items[10].ToString();
-                height6.Text = "" + (string)ristBox4.Items[11].ToString();
+            //    //津波の到達時刻
+            //    arrival_time1.Text = "" + (string)ristBox3.Items[6].ToString();
+            //    arrival_time2.Text = "" + (string)ristBox3.Items[7].ToString();
+            //    arrival_time3.Text = "" + (string)ristBox3.Items[8].ToString();
+            //    arrival_time4.Text = "" + (string)ristBox3.Items[9].ToString();
+            //    arrival_time5.Text = "" + (string)ristBox3.Items[10].ToString();
+            //    arrival_time6.Text = "" + (string)ristBox3.Items[11].ToString();
+            //    //津波の予想高さ
+            //    height1.Text = "" + (string)ristBox4.Items[6].ToString();
+            //    height2.Text = "" + (string)ristBox4.Items[7].ToString();
+            //    height3.Text = "" + (string)ristBox4.Items[8].ToString();
+            //    height4.Text = "" + (string)ristBox4.Items[9].ToString();
+            //    height5.Text = "" + (string)ristBox4.Items[10].ToString();
+            //    height6.Text = "" + (string)ristBox4.Items[11].ToString();
 
-                if (type1.Text == "津波警報")
-                {
-                    type1.BackColor = Color.Red;
-                }
-                else if (type1.Text == "津波注意報")
-                {
-                    type1.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type1.BackColor = Color.MediumOrchid;
-                }
+            //    if (type1.Text == "津波警報")
+            //    {
+            //        type1.BackColor = Color.Red;
+            //    }
+            //    else if (type1.Text == "津波注意報")
+            //    {
+            //        type1.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type1.BackColor = Color.MediumOrchid;
+            //    }
 
-                if (type2.Text == "津波警報")
-                {
-                    type2.BackColor = Color.Red;
-                }
-                else if (type2.Text == "津波注意報")
-                {
-                    type2.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type2.BackColor = Color.MediumOrchid;
-                }
+            //    if (type2.Text == "津波警報")
+            //    {
+            //        type2.BackColor = Color.Red;
+            //    }
+            //    else if (type2.Text == "津波注意報")
+            //    {
+            //        type2.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type2.BackColor = Color.MediumOrchid;
+            //    }
 
-                if (type3.Text == "津波警報")
-                {
-                    type3.BackColor = Color.Red;
-                }
-                else if (type3.Text == "津波注意報")
-                {
-                    type3.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type3.BackColor = Color.MediumOrchid;
-                }
+            //    if (type3.Text == "津波警報")
+            //    {
+            //        type3.BackColor = Color.Red;
+            //    }
+            //    else if (type3.Text == "津波注意報")
+            //    {
+            //        type3.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type3.BackColor = Color.MediumOrchid;
+            //    }
 
-                if (type4.Text == "津波警報")
-                {
-                    type4.BackColor = Color.Red;
-                }
-                else if (type4.Text == "津波注意報")
-                {
-                    type4.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type4.BackColor = Color.MediumOrchid;
-                }
+            //    if (type4.Text == "津波警報")
+            //    {
+            //        type4.BackColor = Color.Red;
+            //    }
+            //    else if (type4.Text == "津波注意報")
+            //    {
+            //        type4.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type4.BackColor = Color.MediumOrchid;
+            //    }
 
-                if (type5.Text == "津波警報")
-                {
-                    type5.BackColor = Color.Red;
-                }
-                else if (type5.Text == "津波注意報")
-                {
-                    type5.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type5.BackColor = Color.MediumOrchid;
-                }
+            //    if (type5.Text == "津波警報")
+            //    {
+            //        type5.BackColor = Color.Red;
+            //    }
+            //    else if (type5.Text == "津波注意報")
+            //    {
+            //        type5.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type5.BackColor = Color.MediumOrchid;
+            //    }
 
-                if (type6.Text == "津波警報")
-                {
-                    type6.BackColor = Color.Red;
-                }
-                else if (type6.Text == "津波注意報")
-                {
-                    type6.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type6.BackColor = Color.MediumOrchid;
-                }
-                
-                timer4.Start();
-            }
-            catch { }
+            //    if (type6.Text == "津波警報")
+            //    {
+            //        type6.BackColor = Color.Red;
+            //    }
+            //    else if (type6.Text == "津波注意報")
+            //    {
+            //        type6.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type6.BackColor = Color.MediumOrchid;
+            //    }
+
+            //    timer4.Start();
+            //}
+            //catch { }
         }
 
         private void type2_Click(object sender, EventArgs e)
@@ -426,131 +440,169 @@ namespace TsunamiInformationViewer
 
         private void timer4_Tick(object sender, EventArgs e)
         {
-            try
-            {
-                timer3.Stop();
-                //津波警報・注意報の種類
-                type1.Text = "" + (string)ristBox1.Items[12].ToString();
-                type2.Text = "" + (string)ristBox1.Items[13].ToString();
-                type3.Text = "" + (string)ristBox1.Items[14].ToString();
-                type4.Text = "" + (string)ristBox1.Items[15].ToString();
-                type5.Text = "" + (string)ristBox1.Items[16].ToString();
-                type6.Text = "" + (string)ristBox1.Items[17].ToString();
-                //津波到達予想区
-                location1.Text = "" + (string)ristBox2.Items[12].ToString();
-                location2.Text = "" + (string)ristBox2.Items[13].ToString();
-                location3.Text = "" + (string)ristBox2.Items[14].ToString();
-                location4.Text = "" + (string)ristBox2.Items[15].ToString();
-                location5.Text = "" + (string)ristBox2.Items[16].ToString();
-                location6.Text = "" + (string)ristBox2.Items[17].ToString();
+            //try
+            //{
+            //    timer3.Stop();
+            //    //津波警報・注意報の種類
+            //    type1.Text = "" + (string)ristBox1.Items[12].ToString();
+            //    type2.Text = "" + (string)ristBox1.Items[13].ToString();
+            //    type3.Text = "" + (string)ristBox1.Items[14].ToString();
+            //    type4.Text = "" + (string)ristBox1.Items[15].ToString();
+            //    type5.Text = "" + (string)ristBox1.Items[16].ToString();
+            //    type6.Text = "" + (string)ristBox1.Items[17].ToString();
+            //    //津波到達予想区
+            //    location1.Text = "" + (string)ristBox2.Items[12].ToString();
+            //    location2.Text = "" + (string)ristBox2.Items[13].ToString();
+            //    location3.Text = "" + (string)ristBox2.Items[14].ToString();
+            //    location4.Text = "" + (string)ristBox2.Items[15].ToString();
+            //    location5.Text = "" + (string)ristBox2.Items[16].ToString();
+            //    location6.Text = "" + (string)ristBox2.Items[17].ToString();
 
-                //津波の到達時刻
-                arrival_time1.Text = "" + (string)ristBox3.Items[12].ToString();
-                arrival_time2.Text = "" + (string)ristBox3.Items[13].ToString();
-                arrival_time3.Text = "" + (string)ristBox3.Items[14].ToString();
-                arrival_time4.Text = "" + (string)ristBox3.Items[15].ToString();
-                arrival_time5.Text = "" + (string)ristBox3.Items[16].ToString();
-                arrival_time6.Text = "" + (string)ristBox3.Items[17].ToString();
-                //津波の予想高さ
-                height1.Text = "" + (string)ristBox4.Items[12].ToString();
-                height2.Text = "" + (string)ristBox4.Items[13].ToString();
-                height3.Text = "" + (string)ristBox4.Items[14].ToString();
-                height4.Text = "" + (string)ristBox4.Items[15].ToString();
-                height5.Text = "" + (string)ristBox4.Items[16].ToString();
-                height6.Text = "" + (string)ristBox4.Items[17].ToString();
+            //    //津波の到達時刻
+            //    arrival_time1.Text = "" + (string)ristBox3.Items[12].ToString();
+            //    arrival_time2.Text = "" + (string)ristBox3.Items[13].ToString();
+            //    arrival_time3.Text = "" + (string)ristBox3.Items[14].ToString();
+            //    arrival_time4.Text = "" + (string)ristBox3.Items[15].ToString();
+            //    arrival_time5.Text = "" + (string)ristBox3.Items[16].ToString();
+            //    arrival_time6.Text = "" + (string)ristBox3.Items[17].ToString();
+            //    //津波の予想高さ
+            //    height1.Text = "" + (string)ristBox4.Items[12].ToString();
+            //    height2.Text = "" + (string)ristBox4.Items[13].ToString();
+            //    height3.Text = "" + (string)ristBox4.Items[14].ToString();
+            //    height4.Text = "" + (string)ristBox4.Items[15].ToString();
+            //    height5.Text = "" + (string)ristBox4.Items[16].ToString();
+            //    height6.Text = "" + (string)ristBox4.Items[17].ToString();
 
-                if (type1.Text == "津波警報")
-                {
-                    type1.BackColor = Color.Red;
-                }
-                else if (type1.Text == "津波注意報")
-                {
-                    type1.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type1.BackColor = Color.MediumOrchid;
-                }
+            //    if (type1.Text == "津波警報")
+            //    {
+            //        type1.BackColor = Color.Red;
+            //    }
+            //    else if (type1.Text == "津波注意報")
+            //    {
+            //        type1.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type1.BackColor = Color.MediumOrchid;
+            //    }
 
-                if (type2.Text == "津波警報")
-                {
-                    type2.BackColor = Color.Red;
-                }
-                else if (type2.Text == "津波注意報")
-                {
-                    type2.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type2.BackColor = Color.MediumOrchid;
-                }
+            //    if (type2.Text == "津波警報")
+            //    {
+            //        type2.BackColor = Color.Red;
+            //    }
+            //    else if (type2.Text == "津波注意報")
+            //    {
+            //        type2.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type2.BackColor = Color.MediumOrchid;
+            //    }
 
-                if (type3.Text == "津波警報")
-                {
-                    type3.BackColor = Color.Red;
-                }
-                else if (type3.Text == "津波注意報")
-                {
-                    type3.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type3.BackColor = Color.MediumOrchid;
-                }
+            //    if (type3.Text == "津波警報")
+            //    {
+            //        type3.BackColor = Color.Red;
+            //    }
+            //    else if (type3.Text == "津波注意報")
+            //    {
+            //        type3.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type3.BackColor = Color.MediumOrchid;
+            //    }
 
-                if (type4.Text == "津波警報")
-                {
-                    type4.BackColor = Color.Red;
-                }
-                else if (type4.Text == "津波注意報")
-                {
-                    type4.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type4.BackColor = Color.MediumOrchid;
-                }
+            //    if (type4.Text == "津波警報")
+            //    {
+            //        type4.BackColor = Color.Red;
+            //    }
+            //    else if (type4.Text == "津波注意報")
+            //    {
+            //        type4.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type4.BackColor = Color.MediumOrchid;
+            //    }
 
-                if (type5.Text == "津波警報")
-                {
-                    type5.BackColor = Color.Red;
-                }
-                else if (type5.Text == "津波注意報")
-                {
-                    type5.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type5.BackColor = Color.MediumOrchid;
-                }
+            //    if (type5.Text == "津波警報")
+            //    {
+            //        type5.BackColor = Color.Red;
+            //    }
+            //    else if (type5.Text == "津波注意報")
+            //    {
+            //        type5.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type5.BackColor = Color.MediumOrchid;
+            //    }
 
-                if (type6.Text == "津波警報")
-                {
-                    type6.BackColor = Color.Red;
-                }
-                else if (type6.Text == "津波注意報")
-                {
-                    type6.BackColor = Color.Orange;
-                }
-                else
-                {
-                    type6.BackColor = Color.MediumOrchid;
-                }
-                timer2.Start();
-            }
-            catch { }
+            //    if (type6.Text == "津波警報")
+            //    {
+            //        type6.BackColor = Color.Red;
+            //    }
+            //    else if (type6.Text == "津波注意報")
+            //    {
+            //        type6.BackColor = Color.Orange;
+            //    }
+            //    else
+            //    {
+            //        type6.BackColor = Color.MediumOrchid;
+            //    }
+            //    timer2.Start();
+            //}
+            //catch { }
         }
 
         private void message_timer1_Tick(object sender, EventArgs e)
         {
-            label1.Visible = true;
 
+            message_timer2.Stop();
+            label1.Visible = true;
+            label1.Text = fm1.textBox1.Text;
+            message_timer2.Start();
         }
 
         private void message_timer2_Tick(object sender, EventArgs e)
         {
-            label1.Visible = true;
 
+            message_timer1.Stop();
+            label1.Visible = true;
+            label1.Text = fm1.textBox2.Text;
+            message_timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (fm1.radioButton1.Checked == true)
+            {
+                label1.Visible = false;
+            }
+            else if (fm1.radioButton2.Checked == true)
+            {
+                label1.Visible = true;
+            }
+            if (fm1.radioButton3.Checked == true)
+            {
+                label1.Text = fm1.textBox1.Text;
+                fm1.checkBox1.Checked = false;
+            }
+            else if (fm1.radioButton4.Checked == true)
+            {
+                label1.Text = fm1.textBox2.Text;
+            }
+            if (fm1.checkBox1.Checked == true)
+            {
+                message_timer1.Start();
+                fm1.radioButton3.Checked = false;
+                fm1.radioButton4.Checked = false;
+            }
+            else
+            {
+                message_timer1.Stop();
+                message_timer2.Stop();
+            }
         }
     }
 }

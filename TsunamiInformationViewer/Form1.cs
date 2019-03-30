@@ -16,17 +16,16 @@ namespace TsunamiInformationViewer
     {
         public string text_URL = "";
 
-        public string ccc = "";
-
         public Form1()
         {
             InitializeComponent();
+
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            TsunamiViewer tsunamiViewer = new TsunamiViewer();
+            TsunamiViewer tsunamiViewer = new TsunamiViewer(this);
             tsunamiViewer.Show();
         }
         private void timer1_Tick(object sender, EventArgs e)
@@ -320,6 +319,8 @@ namespace TsunamiInformationViewer
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
+            TsunamiViewer tv = new TsunamiViewer(this);
+            tv.timer1.Start();
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
@@ -339,72 +340,6 @@ namespace TsunamiInformationViewer
         private void timer2_Tick(object sender, EventArgs e)
         {
 
-            TsunamiViewer tsunamiViewer = new TsunamiViewer();
-            tsunamiViewer.label1.Visible = true;
-            tsunamiViewer.label1.Text = "fdkjfs";
-            if(radioButton1.Checked == true)
-            {
-                radioButton3.Checked = false;
-                radioButton4.Checked = false;
-                tsunamiViewer.label1.Visible = false;
-                tsunamiViewer.message_timer1.Stop();
-                tsunamiViewer.message_timer2.Stop();
-            }
-            else
-            {
-                
-            }
-            if (radioButton2.Checked == true)
-            {
-                radioButton1.Checked = false;
-                tsunamiViewer.label1.Visible = true;
-                if (radioButton3.Checked == true)
-                {
-                    tsunamiViewer.label2.Text = "にゃんぱすー";
-                }
-            }
-
-
-         
-            switch (radioButton2.Checked)
-            {
-                case true:
-                   
-                    switch(radioButton3.Checked)
-                    {
-                        case true:
-                            tsunamiViewer.message_timer1.Start();
-                            tsunamiViewer.label1.Text = "sdfkjsfkjsa";
-                            break;
-                        case false:
-                            tsunamiViewer.message_timer1.Stop();
-                            break;
-                    }
-                    switch(radioButton4.Checked)
-                    {
-                        case true:
-                            tsunamiViewer.message_timer2.Start();
-                            break;
-                        case false:
-                            tsunamiViewer.message_timer2.Stop();
-                            break;
-                    }
-                    break;
-            }
-            switch (checkBox1.Checked)
-            {
-                case true:
-                    radioButton3.Checked = false;
-                    radioButton4.Checked = false;
-                    tsunamiViewer.message_timer1.Start();
-                    tsunamiViewer.message_timer2.Start();
-                    break;
-                case false:
-                    tsunamiViewer.message_timer1.Stop();
-                    tsunamiViewer.message_timer2.Stop();
-                    break;
-            }
         }
-
     }
 }
