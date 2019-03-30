@@ -28,15 +28,26 @@ namespace TsunamiInformationViewer
                 _set = value;
             }
         }
-        public TsunamiViewer(Form1 fm)
+
+        private String _set2;
+
+        public String set2
+        {
+            get
+            {
+                return _set2;
+            }
+            set
+            {
+                _set2 = value;
+            }
+        }
+        public TsunamiViewer()
         {
             InitializeComponent();
             timer2.Start();
             timer3.Start();
             timer4.Start();
-
-            fm1 = fm;
-
 
         }
         private static readonly HttpClient HttpClient = new HttpClient();
@@ -45,8 +56,6 @@ namespace TsunamiInformationViewer
         ListBox ristBox2 = new ListBox();
         ListBox ristBox3 = new ListBox();
         ListBox ristBox4 = new ListBox();
-        private Form1 fm1;
-
         private async void timer1_TickAsync(object sender, EventArgs e)
         {
             string Uri = "http://www.jma.go.jp/jp/tsunami/info_03_20150918030005.html";
@@ -534,23 +543,14 @@ namespace TsunamiInformationViewer
 
         private void message_timer1_Tick(object sender, EventArgs e)
         {
-            label1.Text = fm1.textBox1.Text;
-        }
+            label1.Visible = true;
 
-        private void nac_timer1_Tick(object sender, EventArgs e)
-        {
-            this.label1.Text = fm1.textBox1.Text;
-        }
-
-        private void nac_timer2_Tick(object sender, EventArgs e)
-        {
-
-            this.label1.Text = fm1.textBox2.Text;
         }
 
         private void message_timer2_Tick(object sender, EventArgs e)
         {
-            label1.Text = fm1.textBox2.Text;
+            label1.Visible = true;
+
         }
     }
 }

@@ -56,16 +56,14 @@
             this.height5 = new System.Windows.Forms.Label();
             this.height6 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
             this.message_timer1 = new System.Windows.Forms.Timer(this.components);
-            this.nac_timer1 = new System.Windows.Forms.Timer(this.components);
-            this.nac_timer2 = new System.Windows.Forms.Timer(this.components);
             this.message_timer2 = new System.Windows.Forms.Timer(this.components);
-            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -365,6 +363,18 @@
             this.panel1.Size = new System.Drawing.Size(944, 530);
             this.panel1.TabIndex = 24;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Red;
+            this.label2.Font = new System.Drawing.Font("Koruri Regular", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(60, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(276, 44);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "つなみ！ひなん！";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -407,33 +417,10 @@
             this.message_timer1.Interval = 1000;
             this.message_timer1.Tick += new System.EventHandler(this.message_timer1_Tick);
             // 
-            // nac_timer1
-            // 
-            this.nac_timer1.Interval = 2500;
-            this.nac_timer1.Tick += new System.EventHandler(this.nac_timer1_Tick);
-            // 
-            // nac_timer2
-            // 
-            this.nac_timer2.Enabled = true;
-            this.nac_timer2.Interval = 1000;
-            this.nac_timer2.Tick += new System.EventHandler(this.nac_timer2_Tick);
-            // 
             // message_timer2
             // 
-            this.message_timer2.Interval = 1000;
+            this.message_timer2.Interval = 2000;
             this.message_timer2.Tick += new System.EventHandler(this.message_timer2_Tick);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Red;
-            this.label2.Font = new System.Drawing.Font("Koruri Regular", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(60, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(276, 44);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "つなみ！ひなん！";
             // 
             // TsunamiViewer
             // 
@@ -513,8 +500,6 @@
         private System.Windows.Forms.Timer timer3;
         private System.Windows.Forms.Timer timer4;
         public System.Windows.Forms.Label label1;
-        public System.Windows.Forms.Timer nac_timer1;
-        public System.Windows.Forms.Timer nac_timer2;
         public System.Windows.Forms.Timer message_timer1;
         public System.Windows.Forms.Timer message_timer2;
         public System.Windows.Forms.Label label2;
