@@ -107,6 +107,10 @@ namespace TsunamiInformationViewer
             ristBox2.Sorted = false;
             ristBox3.Sorted = false;
             ristBox4.Sorted = false;
+            ristBox1.Items.Clear();
+            ristBox2.Items.Clear();
+            ristBox3.Items.Clear();
+            ristBox4.Items.Clear();
             foreach (var item in table)
             {
 
@@ -173,7 +177,6 @@ namespace TsunamiInformationViewer
         {
             try
             {
-                timer4.Stop();
                 //津波警報・注意報の種類
                 type1.Text = "" + (string)ristBox1.Items[page * 6].ToString();
                 type2.Text = "" + (string)ristBox1.Items[page * 6 + 1].ToString();
@@ -281,13 +284,16 @@ namespace TsunamiInformationViewer
                 {
                     type6.BackColor = Color.MediumOrchid;
                 }
+                page = page + 1;
+                //page = page % 5;
 
-                timer3.Start();
             }
             catch
             {
+                page = 0;
             }
         }
+    
 
 
         private void timer3_Tick(object sender, EventArgs e)
@@ -410,6 +416,7 @@ namespace TsunamiInformationViewer
 
         private void type2_Click(object sender, EventArgs e)
         {
+
 
         }
 
@@ -577,6 +584,8 @@ namespace TsunamiInformationViewer
             if (fm1.radioButton1.Checked == true)
             {
                 label1.Visible = false;
+                fm1.radioButton3.Checked = false;
+                fm1.radioButton4.Checked = false;
             }
             else if (fm1.radioButton2.Checked == true)
             {
@@ -585,7 +594,6 @@ namespace TsunamiInformationViewer
             if (fm1.radioButton3.Checked == true)
             {
                 label1.Text = fm1.textBox1.Text;
-                fm1.checkBox1.Checked = false;
             }
             else if (fm1.radioButton4.Checked == true)
             {
